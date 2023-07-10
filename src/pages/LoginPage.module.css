@@ -94,7 +94,14 @@
     z-index: 150;
 }
 
-.form>button {
+.btns {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 60%;
+}
+
+.btns>button {
     cursor: pointer;
     border: none;
     padding: 10px 20px;
@@ -106,8 +113,17 @@
     transition: all 0.3s ease;
 }
 
+.btns>button:nth-child(2) {
+    color: blueviolet;
+    background-color: #e5e5e5;
+}
 
-.form>button:hover {
+.btns>button:nth-child(2):hover {
+    background-color: blueviolet;
+    color: #e5e5e5;
+}
+
+.btns>button:hover {
     color: blueviolet;
     background-color: #e5e5e5;
     border: 1px solid blueviolet;
@@ -116,6 +132,7 @@
 .form p {
     margin-top: 10px;
     font-size: 0.9rem;
+    text-align: center;
 }
 
 .success {
@@ -143,6 +160,10 @@
     }
 
     .input {
+        width: 100%;
+    }
+
+    .btns {
         width: 100%;
     }
 }

@@ -3,23 +3,29 @@ import Wrapper from "../components/Wrapper"
 import styled from "./LoginPage.module.css"
 import VisibilityRoundedIcon from '@mui/icons-material/VisibilityRounded';
 import VisibilityOffRoundedIcon from '@mui/icons-material/VisibilityOffRounded';
+import { useNavigate } from "react-router-dom"
+import BasicModal from "../components/Modal";
 
 export const LoginPage = () => {
 
   const required = true
 
   const [input, setInput] = useState({
-    firstName: '',
-    lastName: '',
     email: '',
     password: '',
-    verifyPassword: '',
   })
+
+  const navigate = useNavigate()
 
   const [error, setError] = useState({
     state: Boolean,
     success: Boolean,
     message: '',
+  })
+
+  const [showModal, setShowModal] = useState({
+    state: false,
+    message: {}
   })
 
   const [visible, setVisible] = useState(false)
@@ -32,6 +38,7 @@ export const LoginPage = () => {
       success: '',
       message: '',
     })
+
     const { name, value } = e.target
 
     setInput(p => ({
@@ -46,11 +53,33 @@ export const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log(input)
+    const submit = await fetch('http://localhost:5000/api/v1/tasks/login/user', {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(input),
+    })
+    const response = await submit.json()
+    if (!response.success) {
+      setError({
+        state: true,
+        success: false,
+        message: response.message,
+      })
+      return
+    }
+
+    setShowModal({
+      state: true,
+      message: response
+    })
   }
 
   return (
     <Wrapper>
+      {showModal.state && <BasicModal settings={showModal} />}
+
       <div className={styled.login}>
 
         <form className={styled.form} onSubmit={handleSubmit}>
@@ -88,8 +117,11 @@ export const LoginPage = () => {
                 />
             }
           </div>
-        
-          <button>Login</button>
+
+          <div className={styled.btns}>
+            <button type="submit">Login</button>
+            <button onClick={() => navigate("/recover")}>Recover password</button>
+          </div>
           {
             error.state
             &&

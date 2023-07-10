@@ -3,6 +3,7 @@ import Wrapper from "../components/Wrapper"
 import styled from "./RegisterPage.module.css"
 import VisibilityRoundedIcon from '@mui/icons-material/VisibilityRounded';
 import VisibilityOffRoundedIcon from '@mui/icons-material/VisibilityOffRounded';
+import BasicModal from "../components/Modal";
 
 export const RegisterPage = () => {
 
@@ -17,12 +18,17 @@ export const RegisterPage = () => {
   })
 
   const [error, setError] = useState({
-    state: Boolean,
-    success: Boolean,
+    state: false,
+    success: false,
     message: '',
   })
 
   const [visible, setVisible] = useState(false)
+
+  const [showModal, setShowModal] = useState({
+    state: false,
+    message: {}
+  })
 
   const passwordType = visible ? 'text' : 'password'
 
@@ -46,15 +52,45 @@ export const RegisterPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log(input)
+    const { password, verifyPassword } = input
+    if (password !== verifyPassword) {
+      setError({
+        state: true,
+        success: false,
+        message: 'Passwords do not match',
+      })
+      return
+    }
+    const submit = await fetch('http://localhost:5000/api/v1/tasks/register/user', {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(input),
+    })
+    const response = await submit.json()
+    if (!response.success) {
+      setError({
+        state: true,
+        success: false,
+        message: response.message,
+      })
+      return
+    }
+    setShowModal({
+      state: true,
+      message: response
+    })
+
   }
 
   return (
     <Wrapper>
+      {showModal.state && <BasicModal settings={showModal} />}
       <div className={styled.register}>
         <form className={styled.form} onSubmit={handleSubmit}>
 
-        <h3>Register to save your tasks</h3>
+          <h3>Register to save your tasks</h3>
 
           <div className={styled.input}>
             <input
@@ -132,7 +168,7 @@ export const RegisterPage = () => {
           </div>
           <button>Register</button>
           {
-          error.state
+            error.state
             &&
             <p className={error.success ? styled.success : styled.error}>
               {error.message}

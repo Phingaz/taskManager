@@ -92,8 +92,8 @@ export const Landing = () => {
                 <section className={styled.section}>
                     <div>
                         {lists.lists.map(el => {
-                            return <SlideLeft duration={0.4} delay={0.2} >
-                                <div className={styled.list} id={el._id} key={el._id}>
+                            return <SlideLeft duration={0.4} delay={0.2} key={el._id} >
+                                <div className={styled.list} id={el._id} >
                                     <p className={`${styled.p} ${el.checked && styled.strikeThrough}`}>{el.value}</p>
 
                                     <div className={styled.icons}>

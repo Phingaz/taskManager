@@ -3,6 +3,7 @@ import { Landing } from "./pages/Landing"
 import { EditPage } from "./pages/EditPage"
 import { LoginPage } from "./pages/LoginPage"
 import { RegisterPage } from "./pages/RegisterPage"
+import { Recover } from './pages/Recover'
 
 
 const router = createBrowserRouter([
@@ -10,6 +11,7 @@ const router = createBrowserRouter([
   { path: "/edit", element: <EditPage /> },
   { path: "/register", element: <RegisterPage /> },
   { path: "/login", element: <LoginPage /> },
+  { path: "/recover", element: <Recover /> },
 ])
 
 function App() {

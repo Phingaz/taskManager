@@ -50,7 +50,7 @@ export const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const submit = await fetch('http://localhost:5000/api/v1/taskmanager/auth/login', {
+    const submit = await fetch('https://centraldb.onrender.com/api/v1/taskmanager/auth/login', {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",

@@ -41,7 +41,7 @@ export function MainCtxProvider(props) {
     )
 
     useEffect(() => {
-        fetch('http://localhost:5000/api/v1/tasks/', {
+        fetch('https://centraldb.onrender.com/api/v1/tasks/', {
             headers: {
                 Authentication: `Bearer ${getToken()}`
             }

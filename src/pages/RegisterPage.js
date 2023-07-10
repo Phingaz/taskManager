@@ -64,7 +64,7 @@ export const RegisterPage = () => {
       })
       return
     }
-    const submit = await fetch('http://localhost:5000/api/v1/taskmanager/auth/register', {
+    const submit = await fetch('https://centraldb.onrender.com/api/v1/taskmanager/auth/register', {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",

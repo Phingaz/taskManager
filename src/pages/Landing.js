@@ -32,7 +32,7 @@ export const Landing = () => {
         if (id === 1 || id === 2 || id === 3 | id === 4) {
             lists.delItem(id)
         } else {
-            fetch('http://localhost:5000/api/v1/tasks/' + id, {
+            fetch('https://centraldb.onrender.com/api/v1/tasks/' + id, {
                 headers: {
                     Authentication: `Bearer ${lists.getToken()}`
                 },
@@ -56,7 +56,7 @@ export const Landing = () => {
         if (input.value.trim().length === 0) {
             setError({ success: false, errMsg: `Can't add empty task` })
         } else {
-            fetch('http://localhost:5000/api/v1/tasks', {
+            fetch('https://centraldb.onrender.com/api/v1/tasks', {
                 method: "POST",
                 body: JSON.stringify(input),
                 headers: {

@@ -56,9 +56,21 @@ h1 a {
 }
 
 li a:hover,
-h1 a:hover {
+h1 a:hover,
+li>button:hover {
     cursor: pointer;
     color: var(--hover);
+}
+
+li > button {
+    cursor: pointer;
+    outline: none;
+    border: none;
+    color: var(--links);
+    font-size: 1.2rem;
+    font-weight: bold;
+    font-family: 'Varela Round', sans-serif;
+    background-color: transparent;
 }
 
 @media (max-width: 767px) {

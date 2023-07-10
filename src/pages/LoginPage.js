@@ -1,12 +1,14 @@
-import { useState } from "react"
+import { useState, useContext } from "react"
 import Wrapper from "../components/Wrapper"
 import styled from "./LoginPage.module.css"
 import VisibilityRoundedIcon from '@mui/icons-material/VisibilityRounded';
 import VisibilityOffRoundedIcon from '@mui/icons-material/VisibilityOffRounded';
 import { useNavigate } from "react-router-dom"
-import BasicModal from "../components/Modal";
+import Main from "../store/ctx";
 
 export const LoginPage = () => {
+
+  const login = useContext(Main)
 
   const required = true
 
@@ -21,11 +23,6 @@ export const LoginPage = () => {
     state: Boolean,
     success: Boolean,
     message: '',
-  })
-
-  const [showModal, setShowModal] = useState({
-    state: false,
-    message: {}
   })
 
   const [visible, setVisible] = useState(false)
@@ -53,7 +50,7 @@ export const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const submit = await fetch('https://centraldb.onrender.com/api/v1/tasks/login/user', {
+    const submit = await fetch('http://localhost:5000/api/v1/taskmanager/auth/login', {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
@@ -69,17 +66,12 @@ export const LoginPage = () => {
       })
       return
     }
-
-    setShowModal({
-      state: true,
-      message: response
-    })
+    await login.setToken(response.token)
+    window.location.replace("/")
   }
 
   return (
     <Wrapper>
-      {showModal.state && <BasicModal settings={showModal} />}
-
       <div className={styled.login}>
 
         <form className={styled.form} onSubmit={handleSubmit}>

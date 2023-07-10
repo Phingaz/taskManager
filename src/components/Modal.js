@@ -2,23 +2,15 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { useNavigate } from 'react-router-dom'
 import styled from "./Modal.module.css"
 
 export default function BasicModal({ settings }) {
 
-    const navigate = useNavigate()
-    
     const [open, setOpen] = React.useState(settings.state)
-    
-    const handleHome = () => {
-        setOpen(false)
-        navigate("/")
-    }
 
     const handleLogin = () => {
         setOpen(false)
-        navigate("/login")
+        window.location.replace("/")
     }
 
     const handleClose = () => {
@@ -39,8 +31,7 @@ export default function BasicModal({ settings }) {
                 </Box>
             </Modal>
             <div className={styled.btns}>
-                <button onClick={handleHome}>Home</button>
-                <button onClick={handleLogin}>Login</button>
+                <button onClick={handleLogin}>Log in</button>
             </div>
         </div>
     );

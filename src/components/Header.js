@@ -3,10 +3,16 @@ import { useState } from "react"
 import { NavLink } from "react-router-dom"
 
 export const Header = () => {
+
     const [sh, setSh] = useState(false)
 
     const shoNa = () => {
         setSh(p => !p)
+    }
+
+    const handleLogout = () => {
+        sessionStorage.removeItem('token')
+        window.location.replace("/")
     }
 
     return (
@@ -22,7 +28,7 @@ export const Header = () => {
                     className={({ isActive, isPending }) =>
                         isPending ? styled.pending : isActive ? styled.active : styled.link
                     }>
-                    Home
+                    Tasks
                 </NavLink>
             </h1>
             <nav className={`${styled.nav} ${sh ? styled.open : styled.closed}`}>
@@ -44,6 +50,11 @@ export const Header = () => {
                             }>
                             Login
                         </NavLink>
+                    </li>
+                    <li onClick={handleLogout}>
+                        <button>
+                            Logout
+                        </button>
                     </li>
                 </ul>
             </nav>

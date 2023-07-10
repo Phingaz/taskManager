@@ -10,14 +10,23 @@ const temp = [{
     _id: 2,
     value: "Task 2",
     checked: true
-},]
+},
+{
+    _id: 3,
+    value: "Please login to save your data",
+    checked: false
+},
+{
+    _id: 4,
+    value: "Data entered without been logged will be deleted upon page refresh",
+    checked: false
+},
+]
 
 
 export function MainCtxProvider(props) {
 
-    const [loading, setloading] = useState(true)
-
-    const [valueI, setvalueI] = useState(0)
+    const [user, setUser] = useState('')
 
     const [lists, setLists] = useState([])
 
@@ -32,44 +41,61 @@ export function MainCtxProvider(props) {
     )
 
     useEffect(() => {
-        fetch('https://centraldb.onrender.com/api/v1/tasks/')
+        fetch('http://localhost:5000/api/v1/tasks/', {
+            headers: {
+                Authentication: `Bearer ${getToken()}`
+            }
+        })
             .then(res => res.json())
             .then(data => {
                 if (data.success && data.message.length > 0) {
                     setLists(data.message.all)
-                    const loading = setInterval(() => {
-                        const rand = Math.floor(Math.random() * 15)
-                        setvalueI(p => {
-                            const newValue = p + rand
-                            if (newValue >= 100) {
-                                clearInterval(loading)
-                                setloading(false)
-                            }
-                            return newValue
-                        })
-                    }, 900)
-                    return () => {
-                        clearInterval(loading)
-                    }
+                    setUser(data.name)
+                    // const loading = setInterval(() => {
+                    //     const rand = Math.floor(Math.random() * 15)
+                    //     setvalueI(p => {
+                    //         const newValue = p + rand
+                    //         if (newValue >= 100) {
+                    //             clearInterval(loading)
+                    //             setloading(false)
+                    //         }
+                    //         return newValue
+                    //     })
+                    // }, 900)
+                    // return () => {
+                    //     clearInterval(loading)
+                    // }
                 } else {
                     setLists(temp)
+                    setUser(data.name)
                 }
-                const loading = setInterval(() => {
-                    const rand = Math.floor(Math.random() * 15)
-                    setvalueI(p => {
-                        const newValue = p + rand
-                        if (newValue >= 100) {
-                            clearInterval(loading)
-                            setloading(false)
-                        }
-                        return newValue
-                    })
-                }, 900)
-                return () => {
-                    clearInterval(loading)
-                }
+                // const loading = setInterval(() => {
+                //     const rand = Math.floor(Math.random() * 15)
+                //     setvalueI(p => {
+                //         const newValue = p + rand
+                //         if (newValue >= 100) {
+                //             clearInterval(loading)
+                //             setloading(false)
+                //         }
+                //         return newValue
+                //     })
+                // }, 900)
+                // return () => {
+                //     clearInterval(loading)
+                // }
             })
     }, [])
+
+
+    const getToken = () => {
+        const tokenString = sessionStorage.getItem('token')
+        const userToken = JSON.parse(tokenString)
+        return userToken
+    }
+
+    const setToken = (token) => {
+        sessionStorage.setItem('token', JSON.stringify(token))
+    }
 
     const setList = (data) => {
         setLists(p => ([
@@ -92,6 +118,7 @@ export function MainCtxProvider(props) {
             method: "POST",
             body: JSON.stringify(data),
             headers: {
+                Authentication: `Bearer ${getToken()}`,
                 "Content-type": "application/json"
             }
         })
@@ -110,8 +137,7 @@ export function MainCtxProvider(props) {
 
     return (
         <Main.Provider value={{
-            loading,
-            valueI,
+            user,
             lists,
             edit,
             editedItem,
@@ -119,6 +145,8 @@ export function MainCtxProvider(props) {
             delItem,
             setEditState,
             itemToEdit,
+            setToken,
+            getToken,
         }}>
             {props.children}
         </Main.Provider>

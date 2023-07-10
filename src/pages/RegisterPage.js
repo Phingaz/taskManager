@@ -1,11 +1,14 @@
-import { useState } from "react"
+import { useState, useContext } from "react"
 import Wrapper from "../components/Wrapper"
 import styled from "./RegisterPage.module.css"
 import VisibilityRoundedIcon from '@mui/icons-material/VisibilityRounded';
 import VisibilityOffRoundedIcon from '@mui/icons-material/VisibilityOffRounded';
 import BasicModal from "../components/Modal";
+import Main from "../store/ctx"
 
 export const RegisterPage = () => {
+
+  const ctx = useContext(Main)
 
   const required = true
 
@@ -61,7 +64,7 @@ export const RegisterPage = () => {
       })
       return
     }
-    const submit = await fetch('https://centraldb.onrender.com/api/v1/tasks/register/user', {
+    const submit = await fetch('http://localhost:5000/api/v1/taskmanager/auth/register', {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
@@ -77,6 +80,7 @@ export const RegisterPage = () => {
       })
       return
     }
+    ctx.setToken(response.token)
     setShowModal({
       state: true,
       message: response

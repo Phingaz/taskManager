@@ -29,10 +29,13 @@ export const Landing = () => {
     }
 
     const handleDelete = (id) => {
-        if (id === 1 || id === 2) {
+        if (id === 1 || id === 2 || id === 3 | id === 4) {
             lists.delItem(id)
         } else {
-            fetch('https://centraldb.onrender.com/api/v1/tasks/' + id, {
+            fetch('http://localhost:5000/api/v1/tasks/' + id, {
+                headers: {
+                    Authentication: `Bearer ${lists.getToken()}`
+                },
                 method: "DELETE",
             })
                 .then(res => res.json())
@@ -53,10 +56,11 @@ export const Landing = () => {
         if (input.value.trim().length === 0) {
             setError({ success: false, errMsg: `Can't add empty task` })
         } else {
-            fetch('https://centraldb.onrender.com/api/v1/tasks', {
+            fetch('http://localhost:5000/api/v1/tasks', {
                 method: "POST",
                 body: JSON.stringify(input),
                 headers: {
+                    Authentication: `Bearer ${lists.getToken()}`,
                     "Content-type": "application/json"
                 }
             })
@@ -68,7 +72,6 @@ export const Landing = () => {
             setinput({ value: "" })
         }
     }
-
     return (
         <Wrapper>
             <div>
@@ -87,6 +90,13 @@ export const Landing = () => {
                     </div>
                     {error.errMsg && <p className={`${!error.success && styled.errMsg} ${error.success && styled.successMsg}`}>{error.errMsg}</p>}
                 </form>
+
+                <section className={styled.user}>
+                    <div>
+                        <h2>Hi {lists.user && lists.user},</h2>
+                        <p>Here are your tasks...</p>
+                    </div>
+                </section>
 
 
                 <section className={styled.section}>

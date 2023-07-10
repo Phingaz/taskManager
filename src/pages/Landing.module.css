@@ -51,11 +51,11 @@
     font-weight: bold;
 }
 
-.section {
+.section,.user {
     margin-top: 50px;
 }
 
-.list {
+.list,.user {
     display: flex;
     justify-content: space-between;
     padding: 10px 25px;
@@ -119,6 +119,12 @@
 
 .strikeThrough {
     text-decoration: line-through;
+}
+
+@media (max-width: 767px) {
+    .form {
+        margin-top: 30px;
+    }
 }
 
 @keyframes shaker {

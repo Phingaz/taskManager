@@ -4,7 +4,7 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    min-height: 100svh;
+    min-height: calc(100svh - 65px);
     position: relative;
 }
 

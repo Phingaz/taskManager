@@ -1,12 +1,9 @@
-import { useNavigate } from "react-router-dom"
 import Wrapper from "../components/Wrapper"
 import styled from "./Recover.module.css"
 import { useState } from "react"
 
 
 export const Recover = () => {
-
-  const navigate = useNavigate()
 
   const [email, setEmail] = useState('')
 
@@ -49,11 +46,11 @@ export const Recover = () => {
       message: response.message,
     })
 
-    // setInterval(() => {
-    //   window.location.replace("/register")
-    // }, 13500);
+    setInterval(() => {
+      window.location.replace("/register")
+    }, 3500);
 
-    // setEmail('')
+    setEmail('')
   }
 
   return (

@@ -1,16 +1,9 @@
-.login {
+.recover {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
-    min-height: calc(100svh - 65px);
-}
-
-.login h3 {
-    font-size: 2rem;
-    margin-bottom: 30px;
-    color: var(--h3);
 }
 
 .form {
@@ -20,11 +13,18 @@
     align-items: center;
     width: var(--d-width);
     margin-top: 100px;
-    padding: 100px 30px;
+    padding: 50px 30px;
     border-radius: 5px;
     background-color: #eee;
     box-shadow: 0px 3px 5px 1px rgba(0, 0, 0, 0.488);
 
+}
+
+.form>h5 {
+    text-align: center;
+    font-size: 1.4rem;
+    margin-bottom: 30px;
+    color: var(--h3);
 }
 
 .input {
@@ -86,70 +86,22 @@
     transition: all 0.3s ease;
 }
 
-.icon {
+.form>button {
     cursor: pointer;
+    padding: 1rem;
     color: blueviolet;
-    position: absolute;
-    right: 10px;
-    z-index: 150;
-}
-
-.btns {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 60%;
-}
-
-.btns>button {
-    cursor: pointer;
-    border: none;
-    padding: 10px 20px;
-    color: #e5e5e5;
-    background-color: blueviolet;
+    outline: none;
+    font-size: 1.2rem;
+    font-weight: bolder;
     border-radius: var(--bd-radius);
-    font-weight: bold;
     border: 1px solid blueviolet;
     transition: all 0.3s ease;
+    margin-bottom: 20px;
 }
 
-.btns>button:nth-child(2) {
-    color: blueviolet;
-    background-color: #e5e5e5;
-}
-
-.btns>button:nth-child(2):hover {
+.form>button:hover {
     background-color: blueviolet;
-    color: #e5e5e5;
-}
-
-.btns>button:hover {
-    color: blueviolet;
-    background-color: #e5e5e5;
-    border: 1px solid blueviolet;
-}
-
-.form p {
-    margin-top: 10px;
-    font-size: 0.9rem;
-    text-align: center;
-}
-
-.form>.recover {
-    text-align: right;
-    width: 60%;
-    color: blueviolet;
-    cursor: pointer;
-    text-decoration: underline;
-    font-size: 0.8rem;
-    margin-top: 20px;
-    transition: all 0.1s ease;
-}
-
-.form>.recover:hover {
-    color: fuchsia;
-    scale: 1.01;
-    font-weight: bold;
+    color: #eee;
 }
 
 .success {
@@ -168,29 +120,18 @@
 
 @media (max-width: 767px) {
 
-    .login h3 {
-        text-align: center;
-        font-size: 1.5rem;
+    .form>h5 {
+        font-size: 1.2rem;
     }
 
     .form {
-        margin-top: 0px;
-        padding: 50px 30px;
+        margin-top: 40px;
     }
 
     .input {
         width: 100%;
     }
-
-    .btns {
-        width: 100%;
-    }
-
-    .form>.recover {
-        width: 100%;
-    }
 }
-
 
 @keyframes shaker {
     0% {

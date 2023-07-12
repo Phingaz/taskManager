@@ -112,7 +112,7 @@ export const LoginPage = () => {
 
           <div className={styled.btns}>
             <button type="submit">Login</button>
-            <button onClick={() => navigate("/recover")}>Recover password</button>
+            <button onClick={() => navigate("/register")}>Register</button>
           </div>
           {
             error.state
@@ -121,6 +121,7 @@ export const LoginPage = () => {
               {error.message}
             </p>
           }
+          <p onClick={() => navigate("/recover")} className={styled.recover}>Recover password</p>
         </form>
       </div>
     </Wrapper>

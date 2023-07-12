@@ -1,28 +1,19 @@
 import { createContext, useEffect, useState } from "react";
 
 const Main = createContext({})
+
 const temp = [{
     _id: 1,
-    value: "Walk the dog",
+    value: "Register to create account",
     checked: false
 },
 {
     _id: 2,
-    value: "Task 2",
-    checked: true
-},
-{
-    _id: 3,
-    value: "Please login to save your data",
+    value: "Login to add task ",
     checked: false
 },
-{
-    _id: 4,
-    value: "Data entered without been logged will be deleted upon page refresh",
-    checked: false
-},
-]
 
+]
 
 export function MainCtxProvider(props) {
 
@@ -41,49 +32,21 @@ export function MainCtxProvider(props) {
     )
 
     useEffect(() => {
-        fetch('https://centraldb.onrender.com/api/v1/tasks/', {
-            headers: {
-                Authentication: `Bearer ${getToken()}`
-            }
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success && data.message.length > 0) {
-                    setLists(data.message.all)
-                    setUser(data.name)
-                    // const loading = setInterval(() => {
-                    //     const rand = Math.floor(Math.random() * 15)
-                    //     setvalueI(p => {
-                    //         const newValue = p + rand
-                    //         if (newValue >= 100) {
-                    //             clearInterval(loading)
-                    //             setloading(false)
-                    //         }
-                    //         return newValue
-                    //     })
-                    // }, 900)
-                    // return () => {
-                    //     clearInterval(loading)
-                    // }
-                } else {
-                    setLists(temp)
-                    setUser(data.name)
+        async function fetchData() {
+            const getTask = await fetch('https://centraldb.onrender.com/api/v1/tasks/', {
+                headers: {
+                    Authentication: `Bearer ${getToken()}`
                 }
-                // const loading = setInterval(() => {
-                //     const rand = Math.floor(Math.random() * 15)
-                //     setvalueI(p => {
-                //         const newValue = p + rand
-                //         if (newValue >= 100) {
-                //             clearInterval(loading)
-                //             setloading(false)
-                //         }
-                //         return newValue
-                //     })
-                // }, 900)
-                // return () => {
-                //     clearInterval(loading)
-                // }
             })
+            const data = await getTask.json()
+            if (data.success) {
+                setLists(data.message.all)
+                setUser(data.name)
+            } else {
+                setLists(temp)
+            }
+        }
+        fetchData()
     }, [])
 
 

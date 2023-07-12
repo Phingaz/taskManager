@@ -7,7 +7,7 @@
     min-height: calc(100svh - 65px);
 }
 
-.login h3{
+.login h3 {
     font-size: 2rem;
     margin-bottom: 30px;
     color: var(--h3);
@@ -135,6 +135,23 @@
     text-align: center;
 }
 
+.form>.recover {
+    text-align: right;
+    width: 60%;
+    color: blueviolet;
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: 0.8rem;
+    margin-top: 20px;
+    transition: all 0.1s ease;
+}
+
+.form > .recover:hover {
+    color: fuchsia;
+    scale: 1.01;
+    font-weight: bold;
+}
+
 .success {
     color: green;
     animation: fadeIn 1s;
@@ -152,7 +169,7 @@
     .login h3 {
         text-align: center;
         font-size: 1.5rem;
-     }
+    }
 
     .form {
         margin-top: 0px;
@@ -164,6 +181,10 @@
     }
 
     .btns {
+        width: 100%;
+    }
+
+    .recover {
         width: 100%;
     }
 }

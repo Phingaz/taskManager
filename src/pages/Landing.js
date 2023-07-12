@@ -7,6 +7,7 @@ import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
 import Wrapper from '../components/Wrapper';
 import { useNavigate } from 'react-router-dom';
 import { SlideLeft } from '../components/Reveal';
+import BasicModal from "../components/Modal";
 
 export const Landing = () => {
 
@@ -15,6 +16,11 @@ export const Landing = () => {
     const [input, setinput] = useState({ value: "" })
     const [error, setError] = useState({
         success: Boolean, errMsg: ""
+    })
+
+    const [showModal, setShowModal] = useState({
+        state: false,
+        message: {}
     })
 
     const lists = useContext(Main)
@@ -29,21 +35,17 @@ export const Landing = () => {
     }
 
     const handleDelete = (id) => {
-        if (id === 1 || id === 2 || id === 3 | id === 4) {
-            lists.delItem(id)
-        } else {
-            fetch('https://centraldb.onrender.com/api/v1/tasks/' + id, {
-                headers: {
-                    Authentication: `Bearer ${lists.getToken()}`
-                },
-                method: "DELETE",
+        fetch('https://centraldb.onrender.com/api/v1/tasks/' + id, {
+            headers: {
+                Authentication: `Bearer ${lists.getToken()}`
+            },
+            method: "DELETE",
+        })
+            .then(res => res.json())
+            .then(data => {
+                setError({ success: data.success, errMsg: data.message })
+                lists.delItem(id)
             })
-                .then(res => res.json())
-                .then(data => {
-                    setError({ success: data.success, errMsg: data.message })
-                    lists.delItem(id)
-                })
-        }
     }
 
     const handleEdit = (list) => {
@@ -51,12 +53,12 @@ export const Landing = () => {
         navigate("/edit")
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
         if (input.value.trim().length === 0) {
             setError({ success: false, errMsg: `Can't add empty task` })
         } else {
-            fetch('https://centraldb.onrender.com/api/v1/tasks', {
+            const postTask = await fetch('https://centraldb.onrender.com/api/v1/tasks/', {
                 method: "POST",
                 body: JSON.stringify(input),
                 headers: {
@@ -64,16 +66,24 @@ export const Landing = () => {
                     "Content-type": "application/json"
                 }
             })
-                .then(res => res.json())
-                .then(data => {
-                    setError({ success: data.success, errMsg: `${data.message.value} added successfully` })
-                    lists.setList(data.message)
+
+            const data = await postTask.json()
+            if (!data.success) {
+                setShowModal({
+                    state: true,
+                    message: "You need to login to add task"
                 })
+                return
+            }
+            setError({ success: data.success, errMsg: `${data.message.value} added successfully` })
+            lists.setList(data.message)
             setinput({ value: "" })
         }
     }
+
     return (
         <Wrapper>
+            {showModal.state && <BasicModal state={showModal.state} message={showModal.message} />}
             <div>
                 <form onSubmit={handleSubmit} className={styled.form}>
                     <h1>Task manager</h1>
@@ -94,7 +104,13 @@ export const Landing = () => {
                 <section className={styled.user}>
                     <div>
                         <h2>Hi {lists.user && lists.user},</h2>
-                        <p>Here are your tasks...</p>
+                        {
+                            lists.user
+                                ?
+                                <p>Here are your tasks...</p>
+                                :
+                                <p>Login to save your tasks</p>
+                        }
                     </div>
                 </section>
 

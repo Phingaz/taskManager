@@ -10,7 +10,7 @@ export const RegisterPage = () => {
 
   const ctx = useContext(Main)
 
-  const required = true
+  const required = false
 
   const [input, setInput] = useState({
     firstName: '',
@@ -83,14 +83,14 @@ export const RegisterPage = () => {
     ctx.setToken(response.token)
     setShowModal({
       state: true,
-      message: response
+      message: response.message
     })
 
   }
 
   return (
     <Wrapper>
-      {showModal.state && <BasicModal settings={showModal} />}
+      {showModal.state && <BasicModal state={showModal.state}  message={showModal.message}/>}
       <div className={styled.register}>
         <form className={styled.form} onSubmit={handleSubmit}>
 

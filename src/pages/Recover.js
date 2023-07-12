@@ -31,14 +31,27 @@ export const Recover = () => {
     body: JSON.stringify({email}),
     })
     const response = await submitEmail.json()
+
+    console.log(response)
+
     if(!response.success) {
       setError({
         state: true,
-        success: false,
+        success: response.success,
         message: response.message,
       })
       return
     }
+
+    setError({
+      state: true,
+      success: response.success,
+      message: response.message,
+    })
+
+    // setInterval(() => {
+    //   window.location.replace("/register")
+    // }, 13500);
 
     // setEmail('')
   }
@@ -48,7 +61,7 @@ export const Recover = () => {
       <div className={styled.recover}>
 
         <form className={styled.form} onSubmit={handleSubmit}>
-          <h5>Enter your email address to recover your password</h5>
+          <h5>Enter your email reset your account</h5>
 
           <div className={styled.input}>
             <input
@@ -61,7 +74,7 @@ export const Recover = () => {
           </div>
 
 
-          <button type="submit">Recover Password</button>
+          <button type="submit">Reset</button>
           {
             error.state
             &&

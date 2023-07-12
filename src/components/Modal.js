@@ -18,7 +18,7 @@ export default function BasicModal({ state, message }) {
         setOpen(false)
         ctx.getToken()
             ?
-            navigate("/")
+            window.location.replace("/")
             :
             navigate("/login")
     }

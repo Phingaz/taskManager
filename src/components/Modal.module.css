@@ -47,4 +47,6 @@
     font-weight: bold;
     border: 1px solid blueviolet;
     transition: all 0.3s ease;
+    scale: 2;
+    box-shadow: 0px 0px 5px 1px rgb(98, 0, 255);
 }

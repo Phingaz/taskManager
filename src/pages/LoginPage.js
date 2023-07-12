@@ -67,7 +67,7 @@ export const LoginPage = () => {
       return
     }
     await login.setToken(response.token)
-    window.location.replace("/")
+    navigate("/")
   }
 
   return (

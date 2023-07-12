@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import styled from "./Modal.module.css"
 import Main from '../store/ctx';
+import { useNavigate } from "react-router-dom"
 
 export default function BasicModal({ state, message }) {
 
@@ -11,17 +12,19 @@ export default function BasicModal({ state, message }) {
 
     const ctx = React.useContext(Main)
 
+    const navigate = useNavigate()
+
     const handleLogin = () => {
         setOpen(false)
         ctx.getToken()
             ?
-            window.location.replace("/")
+            navigate("/")
             :
-            window.location.replace("/login")
+            navigate("/login")
     }
 
     const handleClose = () => {
-        setOpen(false)
+        window.location.reload()
     }
 
     return (
@@ -39,6 +42,7 @@ export default function BasicModal({ state, message }) {
             </Modal>
             <div className={styled.btns}>
                 <button onClick={handleLogin}>Log in</button>
+                <button onClick={handleClose}>Cancel</button>
             </div>
         </div>
     );

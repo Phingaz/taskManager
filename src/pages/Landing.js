@@ -111,13 +111,13 @@ export const Landing = () => {
 
                             <section className={styled.user}>
                                 <div>
-                                    <h2>Hi {lists.user && lists.user},</h2>
+                                    <h2>Hi {lists.user.name && lists.user.name},</h2>
                                     {
-                                        lists.user
+                                        lists.user.task !== 0
                                             ?
-                                            <p>Here are your tasks...</p>
+                                            <p>You have {lists.user.task.length} tasks...</p>
                                             :
-                                            <p>Login to save your tasks</p>
+                                            <p>You need to login to save your tasks</p>
                                     }
                                 </div>
                             </section>

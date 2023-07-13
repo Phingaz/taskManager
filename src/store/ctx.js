@@ -17,7 +17,10 @@ const temp = [{
 
 export function MainCtxProvider(props) {
 
-    const [user, setUser] = useState('')
+    const [user, setUser] = useState({
+        name: '',
+        task: 0
+    })
 
     const [lists, setLists] = useState([])
 
@@ -43,7 +46,7 @@ export function MainCtxProvider(props) {
             const data = await getTask.json()
             if (data.success) {
                 setLists(data.message.all)
-                setUser(data.name)
+                setUser({name: data.name, task: data.message.all})
             } else {
                 setLists(temp)
             }
@@ -80,6 +83,11 @@ export function MainCtxProvider(props) {
     }
 
     const itemToEdit = (data) => {
+        if (data._id === 1 || data._id === 2) {
+
+            return
+        }
+        
         setLoading(true)
         fetch('https://centraldb.onrender.com/api/v1/tasks/' + data._id, {
             method: "POST",

@@ -20,7 +20,7 @@ export const Recover = () => {
   const handleSubmit = async (e) => { 
     e.preventDefault()
     
-    const submitEmail = await fetch('http://localhost:5000/api/v1/taskmanager/auth/recover', {
+    const submitEmail = await fetch('https://centraldb.onrender.com/api/v1/taskmanager/auth/recover', {
     method: 'POST',
       headers: {
       "Content-Type": "application/json",
@@ -28,8 +28,6 @@ export const Recover = () => {
     body: JSON.stringify({email}),
     })
     const response = await submitEmail.json()
-
-    console.log(response)
 
     if(!response.success) {
       setError({
@@ -66,6 +64,7 @@ export const Recover = () => {
               type="email"
               onChange={handleChange}
               value={email}
+              required
             />
             <label>Email address</label>
           </div>

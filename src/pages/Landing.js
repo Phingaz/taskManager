@@ -115,7 +115,7 @@ export const Landing = () => {
                                     {
                                         lists.user.task !== 0
                                             ?
-                                            <p>You have {lists.user.task.length} tasks...</p>
+                                            <p>Here are your added tasks...</p>
                                             :
                                             <div className={styled.in_link_parent}>
                                                 <p>

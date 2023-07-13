@@ -34,7 +34,7 @@ export function MainCtxProvider(props) {
             checked: ""
         }
     )
-
+    
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
@@ -73,7 +73,7 @@ export function MainCtxProvider(props) {
             { _id: data._id, value: data.value, checked: data.checked }
         ]))
     }
-
+    
     const delItem = (data) => {
         setLists(lists.filter(list => list._id !== data))
     }
@@ -118,6 +118,7 @@ export function MainCtxProvider(props) {
             loading,
             setLoading,
             user,
+            setUser,
             lists,
             edit,
             editedItem,

@@ -10,7 +10,7 @@ export const RegisterPage = () => {
 
   const ctx = useContext(Main)
 
-  const required = false
+  const required = true
 
   const [input, setInput] = useState({
     firstName: '',

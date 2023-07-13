@@ -87,7 +87,7 @@ export const Landing = () => {
         <>
             {
                 lists.loading
-                 ? 
+                    ?
                     <Loader />
                     :
                     <Wrapper>
@@ -117,7 +117,18 @@ export const Landing = () => {
                                             ?
                                             <p>You have {lists.user.task.length} tasks...</p>
                                             :
-                                            <p>You need to login to save your tasks</p>
+                                            <div className={styled.in_link_parent}>
+                                                <p>
+                                                    You need to <span className={styled.in_link} onClick={() => navigate("/login")}>
+                                                        login </span>
+                                                    to save your tasks
+                                                </p>
+                                                <p>
+                                                   You can click  <span className={styled.in_link} onClick={() => navigate("/register")}>
+                                                        here </span>
+                                                    to create an account
+                                                </p>
+                                            </div>
                                     }
                                 </div>
                             </section>

@@ -13,6 +13,11 @@
 
 .form>h1 {
     margin: 20px 0 15px 0;
+    color: var(--h3);
+}
+
+.user h2 {
+    color: var(--h3);
 }
 
 .form>.input {
@@ -51,11 +56,13 @@
     font-weight: bold;
 }
 
-.section,.user {
+.section,
+.user {
     margin-top: 50px;
 }
 
-.list,.user {
+.list,
+.user {
     display: flex;
     justify-content: space-between;
     padding: 10px 25px;
@@ -68,6 +75,9 @@
     box-shadow: 0px 3px 5px 1px rgba(0, 0, 0, 0.488);
     transition: 0.2s;
     animation: fadeIn 0.5s ease-in;
+    color: #2f3268;
+    font-family: 'Roboto';
+    font-weight: 500;
 }
 
 .list:hover {
@@ -101,6 +111,18 @@
 .list>.icons>.checked:hover,
 .list>.icons>.delete:hover {
     transform: scale(1.1);
+}
+
+.in_link_parent {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.in_link {
+    cursor: pointer;
+    color: var(--links);
 }
 
 .errMsg {

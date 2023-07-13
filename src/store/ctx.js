@@ -2,16 +2,17 @@ import { createContext, useEffect, useState } from "react";
 
 const Main = createContext({})
 
-const temp = [{
-    _id: 1,
-    value: "Register to create account",
-    checked: false
-},
-{
-    _id: 2,
-    value: "Login to add task ",
-    checked: false
-},
+const temp = [
+//     {
+//     _id: 1,
+//     value: `to create account`,
+//     checked: false
+// },
+// {
+//     _id: 2,
+//     value: `to add task`,
+//     checked: false
+// },
 
 ]
 

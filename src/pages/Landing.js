@@ -85,7 +85,6 @@ export const Landing = () => {
 
     return (
         <>
-
             {
                 lists.loading
                  ? 
@@ -154,7 +153,6 @@ export const Landing = () => {
                             </section>
                         </div>
                     </Wrapper>
-
             }
         </>
     )

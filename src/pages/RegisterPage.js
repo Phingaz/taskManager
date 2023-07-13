@@ -5,6 +5,7 @@ import VisibilityRoundedIcon from '@mui/icons-material/VisibilityRounded';
 import VisibilityOffRoundedIcon from '@mui/icons-material/VisibilityOffRounded';
 import BasicModal from "../components/Modal";
 import Main from "../store/ctx"
+import { Loader } from "../components/Loader"
 
 export const RegisterPage = () => {
 
@@ -55,6 +56,7 @@ export const RegisterPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    ctx.setLoading(true)
     const { password, verifyPassword } = input
     if (password !== verifyPassword) {
       setError({
@@ -78,9 +80,11 @@ export const RegisterPage = () => {
         success: false,
         message: response.message,
       })
+      ctx.setLoading(false)
       return
     }
     ctx.setToken(response.token)
+    ctx.setLoading(false)
     setShowModal({
       state: true,
       message: response.message
@@ -89,97 +93,105 @@ export const RegisterPage = () => {
   }
 
   return (
-    <Wrapper>
-      {showModal.state && <BasicModal state={showModal.state}  message={showModal.message}/>}
-      <div className={styled.register}>
-        <form className={styled.form} onSubmit={handleSubmit}>
+    <>
+      {
+        ctx.loading
+          ?
+          <Loader />
+          :
+          <Wrapper>
+            {showModal.state && <BasicModal state={showModal.state} message={showModal.message} />}
+            <div className={styled.register}>
+              <form className={styled.form} onSubmit={handleSubmit}>
 
-          <h3>Register to save your tasks</h3>
+                <h3>Register to save your tasks</h3>
 
-          <div className={styled.input}>
-            <input
-              name='firstName'
-              type="text"
-              onChange={handleChange}
-              value={input.firstName}
-              required={required}
-            />
-            <label>Enter your first name</label>
-          </div>
-          <div className={styled.input}>
-            <input
-              name='lastName'
-              type="text"
-              onChange={handleChange}
-              value={input.lastName}
-              required={required}
-            />
-            <label>Enter your last name</label>
-          </div>
-          <div className={styled.input}>
-            <input
-              name='email'
-              type="email"
-              onChange={handleChange}
-              value={input.email}
-              required={required}
-            />
-            <label>Enter your email address</label>
-          </div>
-          <div className={styled.input}>
-            <input
-              name='password'
-              type={passwordType}
-              onChange={handleChange}
-              value={input.password}
-              required={required}
-            />
-            <label>Enter password</label>
-            {
-              visible ?
-                <VisibilityOffRoundedIcon
-                  className={styled.icon}
-                  onClick={togglePassword}
-                />
-                :
-                <VisibilityRoundedIcon
-                  className={styled.icon}
-                  onClick={togglePassword}
-                />
-            }
-          </div>
-          <div className={styled.input}>
-            <input
-              name='verifyPassword'
-              type={passwordType}
-              onChange={handleChange}
-              value={input.verifyPassword}
-              required={required}
-            />
-            <label>Re-enter your password</label>
-            {
-              visible ?
-                <VisibilityOffRoundedIcon
-                  className={styled.icon}
-                  onClick={togglePassword}
-                />
-                :
-                <VisibilityRoundedIcon
-                  className={styled.icon}
-                  onClick={togglePassword}
-                />
-            }
-          </div>
-          <button>Register</button>
-          {
-            error.state
-            &&
-            <p className={error.success ? styled.success : styled.error}>
-              {error.message}
-            </p>
-          }
-        </form>
-      </div>
-    </Wrapper>
+                <div className={styled.input}>
+                  <input
+                    name='firstName'
+                    type="text"
+                    onChange={handleChange}
+                    value={input.firstName}
+                    required={required}
+                  />
+                  <label>Enter your first name</label>
+                </div>
+                <div className={styled.input}>
+                  <input
+                    name='lastName'
+                    type="text"
+                    onChange={handleChange}
+                    value={input.lastName}
+                    required={required}
+                  />
+                  <label>Enter your last name</label>
+                </div>
+                <div className={styled.input}>
+                  <input
+                    name='email'
+                    type="email"
+                    onChange={handleChange}
+                    value={input.email}
+                    required={required}
+                  />
+                  <label>Enter your email address</label>
+                </div>
+                <div className={styled.input}>
+                  <input
+                    name='password'
+                    type={passwordType}
+                    onChange={handleChange}
+                    value={input.password}
+                    required={required}
+                  />
+                  <label>Enter password</label>
+                  {
+                    visible ?
+                      <VisibilityOffRoundedIcon
+                        className={styled.icon}
+                        onClick={togglePassword}
+                      />
+                      :
+                      <VisibilityRoundedIcon
+                        className={styled.icon}
+                        onClick={togglePassword}
+                      />
+                  }
+                </div>
+                <div className={styled.input}>
+                  <input
+                    name='verifyPassword'
+                    type={passwordType}
+                    onChange={handleChange}
+                    value={input.verifyPassword}
+                    required={required}
+                  />
+                  <label>Re-enter your password</label>
+                  {
+                    visible ?
+                      <VisibilityOffRoundedIcon
+                        className={styled.icon}
+                        onClick={togglePassword}
+                      />
+                      :
+                      <VisibilityRoundedIcon
+                        className={styled.icon}
+                        onClick={togglePassword}
+                      />
+                  }
+                </div>
+                <button>Register</button>
+                {
+                  error.state
+                  &&
+                  <p className={error.success ? styled.success : styled.error}>
+                    {error.message}
+                  </p>
+                }
+              </form>
+            </div>
+          </Wrapper>
+      }
+    </>
   )
 }

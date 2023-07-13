@@ -80,6 +80,7 @@ export function MainCtxProvider(props) {
     }
 
     const itemToEdit = (data) => {
+        setLoading(true)
         fetch('https://centraldb.onrender.com/api/v1/tasks/' + data._id, {
             method: "POST",
             body: JSON.stringify(data),
@@ -94,9 +95,11 @@ export function MainCtxProvider(props) {
                     if (list._id === data.message._id) {
                         return { ...list, value: data.message.value, checked: data.message.checked }
                     }
+                    setLoading(false)
                     return list
                 })
                 setLists(result)
+                setLoading(false)
             })
     }
 
@@ -104,6 +107,7 @@ export function MainCtxProvider(props) {
     return (
         <Main.Provider value={{
             loading,
+            setLoading,
             user,
             lists,
             edit,

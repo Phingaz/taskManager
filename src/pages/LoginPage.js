@@ -5,6 +5,7 @@ import VisibilityRoundedIcon from '@mui/icons-material/VisibilityRounded';
 import VisibilityOffRoundedIcon from '@mui/icons-material/VisibilityOffRounded';
 import { useNavigate } from "react-router-dom"
 import Main from "../store/ctx";
+import { Loader } from "../components/Loader"
 
 export const LoginPage = () => {
 
@@ -50,6 +51,7 @@ export const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    login.setLoading(true)
     const submit = await fetch('https://centraldb.onrender.com/api/v1/taskmanager/auth/login', {
       method: 'POST',
       headers: {
@@ -64,66 +66,76 @@ export const LoginPage = () => {
         success: false,
         message: response.message,
       })
+      login.setLoading(false)
       return
     }
     await login.setToken(response.token)
-    navigate("/")
+    login.setLoading(false)
+    window.location.replace("/")
   }
 
   return (
-    <Wrapper>
-      <div className={styled.login}>
+    <>
+      {
+        login.loading
+          ?
+          <Loader />
+          :
+          <Wrapper>
+            <div className={styled.login}>
 
-        <form className={styled.form} onSubmit={handleSubmit}>
-          <h3>Login to view you tasks</h3>
+              <form className={styled.form} onSubmit={handleSubmit}>
+                <h3>Login to view you tasks</h3>
 
-          <div className={styled.input}>
-            <input
-              name='email'
-              type="email"
-              onChange={handleChange}
-              value={input.email}
-              required={required}
-            />
-            <label>Enter your email address</label>
-          </div>
-          <div className={styled.input}>
-            <input
-              name='password'
-              type={passwordType}
-              onChange={handleChange}
-              value={input.password}
-              required={required}
-            />
-            <label>Enter password</label>
-            {
-              visible ?
-                <VisibilityOffRoundedIcon
-                  className={styled.icon}
-                  onClick={togglePassword}
-                />
-                :
-                <VisibilityRoundedIcon
-                  className={styled.icon}
-                  onClick={togglePassword}
-                />
-            }
-          </div>
+                <div className={styled.input}>
+                  <input
+                    name='email'
+                    type="email"
+                    onChange={handleChange}
+                    value={input.email}
+                    required={required}
+                  />
+                  <label>Enter your email address</label>
+                </div>
+                <div className={styled.input}>
+                  <input
+                    name='password'
+                    type={passwordType}
+                    onChange={handleChange}
+                    value={input.password}
+                    required={required}
+                  />
+                  <label>Enter password</label>
+                  {
+                    visible ?
+                      <VisibilityOffRoundedIcon
+                        className={styled.icon}
+                        onClick={togglePassword}
+                      />
+                      :
+                      <VisibilityRoundedIcon
+                        className={styled.icon}
+                        onClick={togglePassword}
+                      />
+                  }
+                </div>
 
-          <div className={styled.btns}>
-            <button type="submit">Login</button>
-            <button onClick={() => navigate("/register")}>Register</button>
-          </div>
-          {
-            error.state
-            &&
-            <p className={error.success ? styled.success : styled.error}>
-              {error.message}
-            </p>
-          }
-          <p onClick={() => navigate("/recover")} className={styled.recover}>Recover password</p>
-        </form>
-      </div>
-    </Wrapper>
+                <div className={styled.btns}>
+                  <button type="submit">Login</button>
+                  <button onClick={() => navigate("/register")}>Register</button>
+                </div>
+                {
+                  error.state
+                  &&
+                  <p className={error.success ? styled.success : styled.error}>
+                    {error.message}
+                  </p>
+                }
+                <p onClick={() => navigate("/recover")} className={styled.recover}>Recover password</p>
+              </form>
+            </div>
+          </Wrapper>
+      }
+    </>
   )
 }

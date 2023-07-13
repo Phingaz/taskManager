@@ -31,6 +31,8 @@ export function MainCtxProvider(props) {
         }
     )
 
+    const [loading, setLoading] = useState(true)
+
     useEffect(() => {
         async function fetchData() {
             const getTask = await fetch('https://centraldb.onrender.com/api/v1/tasks/', {
@@ -45,6 +47,7 @@ export function MainCtxProvider(props) {
             } else {
                 setLists(temp)
             }
+            setLoading(false)
         }
         fetchData()
     }, [])
@@ -100,6 +103,7 @@ export function MainCtxProvider(props) {
 
     return (
         <Main.Provider value={{
+            loading,
             user,
             lists,
             edit,

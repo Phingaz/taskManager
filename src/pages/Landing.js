@@ -8,6 +8,8 @@ import Wrapper from '../components/Wrapper';
 import { useNavigate } from 'react-router-dom';
 import { SlideLeft } from '../components/Reveal';
 import BasicModal from "../components/Modal";
+import { Loader } from '../components/Loader';
+
 
 export const Landing = () => {
 
@@ -82,68 +84,78 @@ export const Landing = () => {
     }
 
     return (
-        <Wrapper>
-            {showModal.state && <BasicModal state={showModal.state} message={showModal.message} />}
-            <div>
-                <form onSubmit={handleSubmit} className={styled.form}>
-                    <h1>Task manager</h1>
-                    <div className={styled.input}>
-                        <input
-                            name="value"
-                            value={input.value}
-                            placeholder="e.g wash dishes"
-                            onChange={handleInput}
-                            autoComplete='off'
+        <>
 
-                        />
-                        <button type='submit'>Add</button>
-                    </div>
-                    {error.errMsg && <p className={`${!error.success && styled.errMsg} ${error.success && styled.successMsg}`}>{error.errMsg}</p>}
-                </form>
+            {
+                lists.loading
+                 ? 
+                    <Loader />
+                    :
+                    <Wrapper>
+                        {showModal.state && <BasicModal state={showModal.state} message={showModal.message} />}
+                        <div>
+                            <form onSubmit={handleSubmit} className={styled.form}>
+                                <h1>Task manager</h1>
+                                <div className={styled.input}>
+                                    <input
+                                        name="value"
+                                        value={input.value}
+                                        placeholder="e.g wash dishes"
+                                        onChange={handleInput}
+                                        autoComplete='off'
 
-                <section className={styled.user}>
-                    <div>
-                        <h2>Hi {lists.user && lists.user},</h2>
-                        {
-                            lists.user
-                                ?
-                                <p>Here are your tasks...</p>
-                                :
-                                <p>Login to save your tasks</p>
-                        }
-                    </div>
-                </section>
-
-
-                <section className={styled.section}>
-                    <div>
-                        {lists.lists.map(el => {
-                            return <SlideLeft duration={0.4} delay={0.2} key={el._id} >
-                                <div className={styled.list} id={el._id} >
-                                    <p className={`${styled.p} ${el.checked && styled.strikeThrough}`}>{el.value}</p>
-
-                                    <div className={styled.icons}>
-                                        <DeleteForeverRoundedIcon
-                                            className={styled.delete}
-                                            onClick={() => handleDelete(el._id)}
-                                        />
-
-                                        {<CheckCircleOutlinedIcon
-                                            onClick={() => handleEdit(el)}
-                                            className={`${el.checked && styled.checked}`}
-                                        />}
-
-                                        <EditNoteRoundedIcon
-                                            className={styled.edit}
-                                            onClick={() => handleEdit(el)}
-                                        />
-                                    </div>
+                                    />
+                                    <button type='submit'>Add</button>
                                 </div>
-                            </SlideLeft>
-                        })}
-                    </div>
-                </section>
-            </div>
-        </Wrapper>
+                                {error.errMsg && <p className={`${!error.success && styled.errMsg} ${error.success && styled.successMsg}`}>{error.errMsg}</p>}
+                            </form>
+
+                            <section className={styled.user}>
+                                <div>
+                                    <h2>Hi {lists.user && lists.user},</h2>
+                                    {
+                                        lists.user
+                                            ?
+                                            <p>Here are your tasks...</p>
+                                            :
+                                            <p>Login to save your tasks</p>
+                                    }
+                                </div>
+                            </section>
+
+
+                            <section className={styled.section}>
+                                <div>
+                                    {lists.lists.map(el => {
+                                        return <SlideLeft duration={0.4} delay={0.2} key={el._id} >
+                                            <div className={styled.list} id={el._id} >
+                                                <p className={`${styled.p} ${el.checked && styled.strikeThrough}`}>{el.value}</p>
+
+                                                <div className={styled.icons}>
+                                                    <DeleteForeverRoundedIcon
+                                                        className={styled.delete}
+                                                        onClick={() => handleDelete(el._id)}
+                                                    />
+
+                                                    {<CheckCircleOutlinedIcon
+                                                        onClick={() => handleEdit(el)}
+                                                        className={`${el.checked && styled.checked}`}
+                                                    />}
+
+                                                    <EditNoteRoundedIcon
+                                                        className={styled.edit}
+                                                        onClick={() => handleEdit(el)}
+                                                    />
+                                                </div>
+                                            </div>
+                                        </SlideLeft>
+                                    })}
+                                </div>
+                            </section>
+                        </div>
+                    </Wrapper>
+
+            }
+        </>
     )
 }
